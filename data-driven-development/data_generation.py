@@ -16,9 +16,8 @@ def parse_arguments():
         '--config',
         metavar='C',
         default='./config/data-driven-development-demo-image-segmentation.yaml',
-        help=(
-            'Config file which should be used (default:'
-            './config/data-driven-development-demo-image-segmentation.yaml)'))
+        help=('Config file which should be used (default:'
+              './config/data-driven-development-demo-image-segmentation.yaml)'))
     args = parser.parse_args()
     return args
 
@@ -59,7 +58,8 @@ def read_sensor_config(config):
 
 def set_vehicle_ids(sensor_config, setting_config):
     vehicle_ids = ','.join([
-        obj['id'] for obj in sensor_config['objects']
+        obj['id']
+        for obj in sensor_config['objects']
         if obj['type'].startswith('vehicle.')
     ])
     setting_config["role_names"] = vehicle_ids
@@ -105,7 +105,8 @@ def get_file_path_list(configs, file_configs, folder_config, file_extension):
     folder_path = configs.get(folder_config)
     if folder_path and os.path.exists(folder_path):
         filepaths.extend(
-            os.path.join(folder_path, item) for item in os.listdir(folder_path)
+            os.path.join(folder_path, item)
+            for item in os.listdir(folder_path)
             if item.endswith(file_extension))
 
     return filepaths
@@ -114,7 +115,8 @@ def get_file_path_list(configs, file_configs, folder_config, file_extension):
 def get_key_config_perm(sim_conf_perm):
     key_config_permutation = {
         key: value
-        for key, value in sim_conf_perm.items() if key != "sensors_config"
+        for key, value in sim_conf_perm.items()
+        if key != "sensors_config"
     }
     return key_config_permutation
 
@@ -191,8 +193,7 @@ def run_single_permutation(docker, simulation_config_permutation,
     print("Config finished!")
 
 
-def start_permutation_simulations(docker, permutation_configs,
-                                  setting_configs):
+def start_permutation_simulations(docker, permutation_configs, setting_configs):
     permutation_configs = set_sensor_config(permutation_configs)
 
     # setup execution number
@@ -240,8 +241,8 @@ def start_scenario_runner_simulations(docker, scenario_configs,
             for scenario_filepath in scenario_files:
                 if scenario_filepath.endswith(".xosc"):
                     try:
-                        run_scenario(docker, scenario_filepath,
-                                     setting_configs, sensors_config_filepath)
+                        run_scenario(docker, scenario_filepath, setting_configs,
+                                     sensors_config_filepath)
                     except DockerException:
                         docker.compose.down()
 
@@ -284,8 +285,7 @@ def main():
         if "scenario_configs" in simulation_configs:
             print("Simulating scenarios with scenario_runner...")
             start_scenario_runner_simulations(
-                docker, simulation_configs["scenario_configs"],
-                setting_configs)
+                docker, simulation_configs["scenario_configs"], setting_configs)
 
         # Start the simulations defined in config
         if "permutation_configs" in simulation_configs:
