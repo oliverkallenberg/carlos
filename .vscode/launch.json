@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Python Debugger: relative file scenario",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./data_generation.py",
+            "cwd": "${workspaceFolder}/data-driven-development",
+            "console": "integratedTerminal",
+            "args": ["--config",
+                "./config/data-driven-development-demo-scenario-execution.yml"]
+        }
+    ]
+}
